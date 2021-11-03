@@ -17,6 +17,7 @@ import com.anychart.charts.Cartesian;
 import com.anychart.core.cartesian.series.Column;
 import com.anychart.enums.Anchor;
 import com.anychart.enums.HoverMode;
+import com.anychart.enums.Position;
 import com.anychart.enums.TooltipPositionMode;
 import com.example.stepapp.R;
 import com.example.stepapp.StepAppOpenHelper;
@@ -68,15 +69,28 @@ public class DayFragment extends Fragment {
             data.add(new ValueDataEntry(entry.getKey(), entry.getValue()));
 
         Column column = cartesian.column(data);
+
+        column.fill("#1EB980");
+        column.stroke("#1EB980");
+
         column.tooltip()
                 .titleFormat("At day: {%X}")
                 .format("{%Value}{groupsSeparator: } Steps")
                 .anchor(Anchor.RIGHT_TOP);
+
+
+        column.tooltip().position(Position.RIGHT_TOP).offsetX(0d).offsetY(5);
+
+
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
         cartesian.interactivity().hoverMode(HoverMode.BY_X);
         cartesian.yScale().minimum(0);
 
 
+        cartesian.yAxis(0).title("Number of steps");
+        cartesian.xAxis(0).title("Days");
+        cartesian.background().fill("#00000000");
+        cartesian.animation(true);
 
         return cartesian;
     }

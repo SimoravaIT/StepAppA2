@@ -104,7 +104,8 @@ public class HourFragment  extends Fragment {
 
         //***** Modify the UI of the chart *********/
         // TODO 4. Change the color of column chart and its border
-
+        column.fill("#1EB980");
+        column.stroke("#1EB980");
 
         //Modifying properties of tooltip
         column.tooltip()
@@ -113,7 +114,7 @@ public class HourFragment  extends Fragment {
                 .anchor(Anchor.RIGHT_TOP);
 
         // TODO 5: Modify column chart tooltip properties
-
+        column.tooltip().position(Position.RIGHT_TOP).offsetX(0d).offsetY(5);
 
         // Modifying properties of cartesian
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
@@ -122,7 +123,10 @@ public class HourFragment  extends Fragment {
 
 
         // TODO 6: Modify the UI of the cartesian
-
+        cartesian.yAxis(0).title("number of steps");
+        cartesian.xAxis(0).title("Hour");
+        cartesian.background().fill("#00000000");
+        cartesian.animation(true);
 
         return cartesian;
     }
