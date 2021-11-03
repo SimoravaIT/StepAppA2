@@ -15,6 +15,7 @@ import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.charts.Cartesian;
 import com.anychart.core.cartesian.series.Column;
+import com.anychart.data.Tree;
 import com.anychart.enums.Anchor;
 import com.anychart.enums.HoverMode;
 import com.anychart.enums.Position;
@@ -31,8 +32,8 @@ import java.util.TreeMap;
 
 public class HourFragment  extends Fragment {
 
-    public int todaySteps = 0;
-    TextView numStepsTextView;
+    public int todaySteps = 0; //calcolii i passi di gogi
+    TextView numStepsTextView;//metti i passi di oggi sotto, inutile
     AnyChartView anyChartView;
 
     Date cDate = new Date();
@@ -75,15 +76,18 @@ public class HourFragment  extends Fragment {
         //***** Read data from SQLiteDatabase *********/
         // TODO 1: Get the map with hours and number of steps for today
         //  from the database and initialize it to variable stepsByHour
-
+        stepsByHour=StepAppOpenHelper.loadStepsByHour(getContext(),current_time);
 
         // TODO 2: Creating a new map that contains hours of the day from 0 to 23 and
         //  number of steps during each hour set to 0
-
+        Map<Integer, Integer> graph_map = new TreeMap<>();
+        for(int i=0;i<24;i++){
+            graph_map.put(i,0);
+        }
 
         // TODO 3: Replace the number of steps for each hour in graph_map
         //  with the number of steps read from the database
-
+        graph_map.putAll(stepsByHour);
 
         //***** Create column chart using AnyChart library *********/
         // 1. Create and get the cartesian coordinate system for column chart

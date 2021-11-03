@@ -165,7 +165,39 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         // 6. Return the map with hours and number of steps
         return map;
     }
+    public static Map<String, Integer> loadStepsByDay(Context context, String date){
+        // 1. Define a map to store the hour and number of steps as key-value pairs
+        Map<String, Integer>  map = new HashMap<> ();
 
+        // 2. Get the readable database
+        StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
+        SQLiteDatabase database = databaseHelper.getReadableDatabase();
+
+        // 3. Define the query to get the data
+
+
+        String [] columns = new String [] {StepAppOpenHelper.KEY_DAY,"COUNT(*)"};
+        Cursor cursor=database.query(StepAppOpenHelper.TABLE_NAME,columns,null, null,StepAppOpenHelper.KEY_DAY,null,StepAppOpenHelper.KEY_DAY);
+        // 4. Iterate over returned elements on the cursor
+        cursor.moveToFirst();
+        for (int index=0; index < cursor.getCount(); index++){
+            String tmpKey = cursor.getString(0);
+            Integer tmpValue = Integer.parseInt(cursor.getString(1));
+
+            //2. Put the data from the database into the map
+            map.put(tmpKey, tmpValue);
+
+
+            cursor.moveToNext();
+        }
+
+        // 5. Close the cursor and database
+        cursor.close();
+        database.close();
+
+        // 6. Return the map with hours and number of steps
+        return map;
+    }
     /**
      * Utility function to get the number of steps by day
      *
